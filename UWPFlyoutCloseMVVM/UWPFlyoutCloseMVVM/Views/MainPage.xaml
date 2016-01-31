@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="UWPFlyoutCloseMVVM.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPFlyoutCloseMVVM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:actions="using:UWPFlyoutCloseMVVM.Actions"
+    mc:Ignorable="d"
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/dreamy_fields-1920x1080.jpg"/>
+        </Grid.Background>
+        <RelativePanel>
+            <Button x:Name="FlyoutButton"
+                    Margin="0,0,0,50"
+                    Content="Look ma I'm going to open a flyout"
+                    RelativePanel.AlignBottomWithPanel="True"
+                    RelativePanel.AlignHorizontalCenterWithPanel="True" Background="#FFBFBFBF">
+                <Button.Flyout>
+                    <Flyout Placement="Full">
+                        <Grid Background="DarkGoldenrod" RequestedTheme="Dark">
+                            <RelativePanel>
+                                <Button Content="Perform super long business logic code"
+                                        Command="{Binding LongCodeCommand}"
+                                        Margin="0,0,0,50"
+                                        RelativePanel.AlignBottomWithPanel="True"
+                                        RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                            </RelativePanel>
+                        </Grid>
+
+                        <interactivity:Interaction.Behaviors>
+                            <core:DataTriggerBehavior Binding="{Binding IsFlyoutClosed}"
+                                                      ComparisonCondition="Equal" Value="True">
+                                <actions:CloseFlyoutAction />
+                            </core:DataTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </RelativePanel>
+    </Grid>
+</Page>
